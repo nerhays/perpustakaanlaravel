@@ -76,13 +76,9 @@ class UserController extends Controller
     public function destroy($id_user)
 {
     $user = User::findOrFail($id_user);
-    $user->delete(); 
+    $user->delete();
 
-    if(request()->ajax()) {
-        return response()->json(['success' => true]);
-    }
-
-    return redirect()->route('users.index')->with('success', 'User permanently deleted.');
+    return response()->json(['success' => true]);
 }
 
 }

@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Skydash Admin')</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/feather/feather.css') }}">
@@ -23,6 +24,12 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
 </head>
 <body>
+<div id="loader" style="display: none;">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
     <div class="container-scroller">
         <!-- Header 
         @include('partials.header')-->

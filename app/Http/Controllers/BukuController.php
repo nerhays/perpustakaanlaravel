@@ -57,7 +57,7 @@ public function update(Request $request, $idbuku)
 public function destroy($idbuku)
 {
     Buku::findOrFail($idbuku)->delete();
-    return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus.');
+    return response()->json(['success' => true]);
 }
 
 }

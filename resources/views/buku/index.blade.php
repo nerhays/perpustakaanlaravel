@@ -3,6 +3,26 @@
 @section('title', 'Buku Management')
 
 @section('content')
+<style>
+    #loader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+</style>
 <div class="container">
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -36,7 +56,7 @@
                     <form action="{{ route('buku.destroy', $buku->idbuku) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        <button type="button" class="btn btn-danger delete-btn" data-id="{{ $buku->idbuku }}">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -44,4 +64,48 @@
         </tbody>
     </table>
 </div>
+@endsection
+
+@section('scripts')
+    <script> 
+       $(document).ready(function(){
+        $('.delete-btn').on('click', function(e){
+            e.preventDefault();
+            let bukuId = $(this).data('id'); 
+            let url = '/buku/' + bukuId; 
+            let row = $(this).closest('tr');
+
+            if (confirm('Are you sure you want to delete this book?')) { 
+                $('#loader').show(); 
+
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response){
+                        $('#loader').hide(); 
+                        if(response.success) {
+                            row.fadeOut('slow', function(){
+                                $(this).remove();
+                            });
+                            alert('Book deleted successfully.');
+                        } else {
+                            alert('Failed to delete book. Please try again.');
+                        }
+                    },
+                    error: function(xhr){
+                        $('#loader').hide(); 
+                        alert('Something went wrong. Please try again.');
+                    }
+                });
+            }
+        });
+    });
+
+
+
+    </script>
+    
 @endsection

@@ -50,7 +50,8 @@ public function update(Request $request, $idkategori)
 public function destroy($idkategori)
 {
     Kategori::findOrFail($idkategori)->delete();
-    return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus.');
+    
+    return response()->json(['success' => true]);
 }
 
 }
