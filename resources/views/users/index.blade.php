@@ -57,21 +57,19 @@
     <script> 
         $(document).ready(function(){
     $('.delete-btn').on('click', function(e){
-        e.preventDefault();  // Mencegah tombol form submit biasa
-        let userId = $(this).data('id');  // Mengambil id_user dari tombol
-        let url = '/users/' + userId;     // Membuat URL untuk menghapus user berdasarkan id_user
-        let row = $(this).closest('tr');  // Menyimpan baris (tr) yang akan dihapus
-        
+        e.preventDefault();  
+        let userId = $(this).data('id');  
+        let url = '/users/' + userId;     
+        let row = $(this).closest('tr');          
         if (confirm('Are you sure?')) {
             $.ajax({
-                url: url, // Mengarahkan ke route yang sesuai
-                type: 'DELETE', // Tipe request
+                url: url, 
+                type: 'DELETE', 
                 data: {
-                    _token: $('input[name="_token"]').val()  // Mengirimkan CSRF token
+                    _token: $('input[name="_token"]').val()  
                 },
                 success: function(response){
                     if(response.success) {
-                        // Hapus baris dengan efek fadeOut
                         row.fadeOut('slow', function(){
                             $(this).remove();
                         });
