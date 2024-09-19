@@ -20,6 +20,11 @@
       </div>
     </li>
     
-    <li class="nav-item"> <a class="nav-link" href="/peminjaman">Peminjaman</a></li>
+    <li class="nav-item">       
+      <a class="nav-link" href="/peminjaman">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Peminjaman</span>
+      </a>
+    </li>
   </ul>
 </nav>

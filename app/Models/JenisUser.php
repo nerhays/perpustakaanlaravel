@@ -10,10 +10,10 @@ class JenisUser extends Model
     use HasFactory;
     protected $table = 'jenis_user';
     protected $primaryKey = 'id_jenis_user';
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
-        'jenis_user', 'create_by', 'update_by', 'delete_mark'
+        'id_jenis_user', 'jenis_user', 'create_by', 'update_by', 'delete_mark'
     ];
 
     public function users()
