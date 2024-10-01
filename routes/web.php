@@ -12,6 +12,9 @@ use App\Http\Controllers\MahasiswaPeminjamanController;
 use App\Http\Controllers\MahasiswaBukuController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\JenisUserController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\SettingMenuUserController;
+use App\Http\Controllers\MessageController;
 
 //login logout register
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login.form');
@@ -42,7 +45,23 @@ Route::middleware([CheckUserRole::class.':1'])->group(function () {
     Route::post('/jenisuser', [JenisUserController::class, 'store'])->name('jenisuser.store'); 
     Route::get('/{id_jenis_user}/edit', [JenisUserController::class, 'edit'])->name('jenisuser.edit'); 
     Route::put('/{id_jenis_user}', [JenisUserController::class, 'update'])->name('jenisuser.update'); 
-    Route::delete('/jenisuser/{id_jenis_user}', [JenisUserController::class, 'destroy'])->name('jenisuser.destroy'); 
+    Route::delete('/jenisuser/{id_jenis_user}', [JenisUserController::class, 'destroy'])->name('jenisuser.destroy');
+    
+    //manage menu
+    Route::get('/managemenu', [MenuController::class, 'index'])->name('managemenu.index'); 
+    Route::get('/managemenu/create', [MenuController::class, 'create'])->name('managemenu.create'); 
+    Route::post('/managemenu', [MenuController::class, 'store'])->name('managemenu.store'); 
+    Route::get('/managemenu/{menu_id}/edit', [MenuController::class, 'edit'])->name('managemenu.edit'); 
+    Route::put('/managemenu/{menu_id}', [MenuController::class, 'update'])->name('managemenu.update'); 
+    Route::delete('/managemenu/{menu_id}', [MenuController::class, 'destroy'])->name('managemenu.destroy');
+
+    //setting menu
+    Route::get('/settingmenu', [SettingMenuUserController::class, 'index'])->name('settingmenu.index'); 
+    Route::get('/settingmenu/create', [SettingMenuUserController::class, 'create'])->name('settingmenu.create'); 
+    Route::post('/settingmenu', [SettingMenuUserController::class, 'store'])->name('settingmenu.store'); 
+    Route::get('/settingmenu/{no_setting}/edit', [SettingMenuUserController::class, 'edit'])->name('settingmenu.edit'); 
+    Route::put('/setting/{no_setting}', [SettingMenuUserController::class, 'update'])->name('settingmenu.update'); 
+    Route::delete('/settingmenu/{no_setting}', [SettingMenuUserController::class, 'destroy'])->name('settingmenu.destroy');
 });
 
 Route::middleware([CheckUserRole::class.':2'])->group(function () {
@@ -86,3 +105,19 @@ Route::middleware([CheckUserRole::class.':3'])->group(function () {
     Route::get('/mahasiswa/peminjaman', [MahasiswaPeminjamanController::class, 'index'])->name('mahasiswa.peminjaman.index');
     Route::post('/mahasiswa/peminjaman/kembalikan/{idpeminjaman}', [MahasiswaPeminjamanController::class, 'kembalikan'])->name('mahasiswa.peminjaman.kembalikan');
     });
+
+    //email
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/inbox', [MessageController::class, 'inbox'])->name('inbox');
+        Route::get('/deleted', [MessageController::class, 'deleted'])->name('deleted');
+        Route::get('/draft', [MessageController::class, 'draft'])->name('draft');
+        Route::post('/send-draft/{id}', [MessageController::class, 'sendFromDraft'])->name('send.draft');
+        Route::get('/sent', [MessageController::class, 'sent'])->name('sent');
+        Route::get('/send-message', [MessageController::class, 'create'])->name('create.message');
+        Route::post('/send-message', [MessageController::class, 'send'])->name('send.message');
+        Route::get('/read-message/{id}', [MessageController::class, 'read'])->name('read.message');
+        Route::post('/reply-message/{id}', [MessageController::class, 'reply'])->name('reply.message');
+        Route::get('/edit-draft/{id}', [MessageController::class, 'edit'])->name('edit.draft');
+        Route::put('/update-draft/{id}', [MessageController::class, 'update'])->name('update.draft');
+    });
+    

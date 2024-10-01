@@ -1,4 +1,4 @@
-@extends('penjaga.layout')
+@extends('layouts.app')
 
 @section('title', 'Example Page')
 
@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <h1>Welcome to Library</h1>
+    <h1>Hello, {{ auth()->user()->nama_user }}! Welcome to the Library</h1>
 @endsection
 
 @section('scripts')

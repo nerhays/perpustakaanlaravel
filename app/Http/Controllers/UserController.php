@@ -58,6 +58,7 @@ class UserController extends Controller
             'username' => 'required|unique:user,username,'.$id_user. ',id_user',
             'email' => 'required|email',
             'id_jenis_user' => 'required',
+            'password' => 'nullable|min:6',
         ]);
 
         $user = User::findOrFail($id_user);
@@ -69,6 +70,12 @@ class UserController extends Controller
             'status_user' => $request->status_user,
             'update_by' => auth()->user()->username,
         ]);
+
+        if ($request->filled('password')) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }

@@ -21,6 +21,7 @@ class JenisUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'id_jenis_user' => 'required|unique:jenis_user,id_jenis_user',
             'jenis_user' => 'required|unique:jenis_user,jenis_user',
         ]);
 
@@ -42,6 +43,7 @@ class JenisUserController extends Controller
     public function update(Request $request, $id_jenis_user)
     {
         $request->validate([
+            'id_jenis_user' => 'required|unique:jenis_user,id_jenis_user,' . $id_jenis_user . ',id_jenis_user',
             'jenis_user' => 'required|unique:jenis_user,jenis_user,' . $id_jenis_user . ',id_jenis_user',
         ]);
 

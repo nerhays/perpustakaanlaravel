@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2024 at 04:56 PM
+-- Generation Time: Oct 01, 2024 at 03:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,10 +43,9 @@ CREATE TABLE `buku` (
 --
 
 INSERT INTO `buku` (`idbuku`, `kode`, `judul`, `pengarang`, `idkategori`, `status_buku`, `created_at`, `updated_at`) VALUES
-(4, 'NV-01', 'Home Sweet Loan', 'Almira Bastari', 1, '1', NULL, '2024-09-18 00:29:06'),
-(5, 'BO-01', 'Mohammad Hatta, Untuk Negeriku', 'Taufik Abdullah', 2, '1', NULL, NULL),
-(6, 'NV-02', 'Keajaiban Toko Kelontong Namiya', 'Keigo Higashino', 1, '1', NULL, '2024-09-18 00:22:52'),
-(7, 'BU-00', 'Bumi', 'Tere Liye', 1, '1', '2024-09-16 22:26:37', '2024-09-18 00:14:05');
+(4, 'NV-01', 'Home Sweet Loan', 'Almira Bastari', 1, '1', NULL, '2024-09-30 23:45:10'),
+(5, 'BO-01', 'Mohammad Hatta, Untuk Negeriku', 'Taufik Abdullah', 2, '1', NULL, '2024-09-30 23:54:41'),
+(6, 'NV-02', 'Keajaiban Toko Kelontong Namiya', 'Keigo Higashino', 1, '1', NULL, '2024-09-18 00:22:52');
 
 -- --------------------------------------------------------
 
@@ -178,7 +177,7 @@ INSERT INTO `kategori` (`idkategori`, `nama_kategori`, `created_at`, `updated_at
 
 CREATE TABLE `menu` (
   `menu_id` varchar(30) NOT NULL,
-  `id_level` varchar(30) NOT NULL,
+  `id_level` varchar(30) DEFAULT NULL,
   `menu_name` varchar(300) NOT NULL,
   `menu_link` varchar(300) NOT NULL,
   `menu_icon` varchar(300) DEFAULT NULL,
@@ -195,12 +194,19 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`menu_id`, `id_level`, `menu_name`, `menu_link`, `menu_icon`, `parent_id`, `create_by`, `update_by`, `delete_mark`, `create_date`, `update_date`) VALUES
-('1', '1', 'Manage Users', '/users', 'fas fa-users', NULL, NULL, NULL, '0', '2024-09-16 04:22:32', NULL),
-('3', '2', 'Manage Buku', '/buku', 'fas fa-book', NULL, NULL, NULL, '0', '2024-09-16 04:22:32', NULL),
-('4', '2', 'Manage Kategori', '/kategori', 'fas fa-tags', NULL, NULL, NULL, '0', '2024-09-16 04:22:32', NULL),
-('5', '2', 'Peminjaman', '/peminjaman', 'fas fa-exchange-alt', NULL, NULL, NULL, '0', '2024-09-16 04:22:32', NULL),
-('6', '3', 'Buku', '/mahasiswa/buku', 'fas fa-book-open', NULL, NULL, NULL, '0', '2024-09-16 04:22:32', NULL),
-('7', '3', 'Riwayat Peminjaman', '/mhs/peminjaman', 'fas fa-undo', NULL, NULL, NULL, '0', '2024-09-16 04:22:32', NULL);
+('1', '1', 'Manage Users', 'users.index', 'icon-head', NULL, NULL, 'admin', '0', '2024-09-16 04:22:32', NULL),
+('10', NULL, 'Setting Relasi', 'settingmenu.index', 'mdi mdi-access-point-network', NULL, 'admin', NULL, '0', '2024-09-25 03:25:01', NULL),
+('11', NULL, 'Dashboard', 'dashboardadm', 'icon-grid', NULL, 'admin', NULL, '0', '2024-09-25 12:52:37', NULL),
+('12', NULL, 'Dashboard', 'dashboardpjg', 'icon-grid', NULL, 'admin', NULL, '0', '2024-09-25 12:54:29', NULL),
+('13', NULL, 'Dashboard', 'dashboardmhs', 'icon-grid', NULL, 'admin', NULL, '0', '2024-09-25 12:55:02', NULL),
+('14', NULL, 'Email', 'inbox', 'mdi mdi-account-box-outline', NULL, 'admin', NULL, '0', '2024-09-29 08:37:16', NULL),
+('3', '2', 'Manage Buku', 'buku.index', 'mdi mdi-book-plus', NULL, NULL, 'admin', '0', '2024-09-16 04:22:32', NULL),
+('4', '2', 'Manage Kategori', 'kategori.index', 'mdi mdi-apps', NULL, NULL, 'admin', '0', '2024-09-16 04:22:32', NULL),
+('5', '2', 'Peminjaman', 'peminjaman.index', 'mdi mdi-account-box-outline', NULL, NULL, 'admin', '0', '2024-09-16 04:22:32', NULL),
+('6', '3', 'Buku', 'mahasiswa.buku.index', 'mdi mdi-book-plus', NULL, NULL, 'admin', '0', '2024-09-16 04:22:32', NULL),
+('7', '3', 'Riwayat Peminjaman', 'mahasiswa.peminjaman.index', 'icon-paper', NULL, NULL, 'admin', '0', '2024-09-16 04:22:32', NULL),
+('8', NULL, 'Manage Menu', 'managemenu.index', 'mdi mdi-apps', NULL, 'admin', 'admin', '0', '2024-09-25 02:44:31', NULL),
+('9', NULL, 'Manage Role', 'jenisuser.index', 'mdi mdi-account-convert', NULL, 'admin', 'admin', '0', '2024-09-25 03:24:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -260,7 +266,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2024_09_18_015112_add_verification_to_peminjaman_table', 9),
 (16, '2024_09_18_023053_edit_peminjamannn', 10),
 (17, '2024_09_18_032733_update_status_enum_in_peminjaman_table', 11),
-(18, '2024_09_18_064455_editrelasi', 12);
+(18, '2024_09_18_064455_editrelasi', 12),
+(19, '2024_09_19_000508_create_personal_access_tokens_table', 13),
+(20, '2024_09_29_075854_message', 14),
+(21, '2024_09_29_085440_massageee', 15),
+(22, '2024_09_29_090146_messageto', 16),
+(23, '2024_09_30_031243_msagetoo', 17);
 
 -- --------------------------------------------------------
 
@@ -298,8 +309,11 @@ CREATE TABLE `peminjaman` (
 
 INSERT INTO `peminjaman` (`idpeminjaman`, `id_user`, `idbuku`, `tanggal_pinjam`, `tanggal_kembali`, `status`, `is_verified`, `created_at`, `updated_at`) VALUES
 (5, 1, 4, '2024-09-18', '2024-09-18', 'dikembalikan', 1, NULL, NULL),
-(6, 1, 7, '2024-09-18', '2024-09-18', 'dikembalikan', 1, NULL, NULL),
-(7, 1, 6, '2024-09-18', '2024-09-18', 'dikembalikan', 1, NULL, NULL);
+(7, 1, 6, '2024-09-18', '2024-09-18', 'dikembalikan', 1, NULL, NULL),
+(9, 1, 4, '2024-09-27', '2024-09-25', 'dikembalikan', 1, NULL, NULL),
+(10, 1, 4, '2024-09-29', '2024-09-29', 'dikembalikan', 1, NULL, NULL),
+(11, 1, 4, '2024-10-01', '2024-10-01', 'dikembalikan', 1, NULL, NULL),
+(12, 1, 5, '2024-10-01', '2024-10-01', 'dikembalikan', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -321,7 +335,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('xB8w6irR5PxcldqbhoGcEjWOftWGHWnX18MtHlkA', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiYktDMWFkS1lnS0NucFFCNmZmaXhJMzlIMllWWU9BSmdFd0hZOENSVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VycyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7fQ==', 1726661116);
+('NXx5zoa4nf2UJd7JgsYNO9udkF4rptIeK3xpNhoc', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZE1xdTBRbkZnbUh3ZGNONjB2N0VkUlpOUnY3Zkhmb1l6SjJQWEIyQiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yZWFkLW1lc3NhZ2UvMTkiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1727746391);
 
 -- --------------------------------------------------------
 
@@ -345,12 +359,21 @@ CREATE TABLE `setting_menu_user` (
 --
 
 INSERT INTO `setting_menu_user` (`no_setting`, `id_jenis_user`, `menu_id`, `create_by`, `update_by`, `delete_mark`, `create_date`, `update_date`) VALUES
-('1', '1', '1', NULL, NULL, '0', '2024-09-16 04:25:01', NULL),
-('3', '2', '3', NULL, NULL, '0', '2024-09-16 04:25:01', NULL),
-('4', '2', '4', NULL, NULL, '0', '2024-09-16 04:25:01', NULL),
-('5', '2', '5', NULL, NULL, '0', '2024-09-16 04:25:01', NULL),
-('6', '3', '6', NULL, NULL, '0', '2024-09-16 04:25:01', NULL),
-('7', '3', '7', NULL, NULL, '0', '2024-09-16 04:25:01', NULL);
+('adm-1', '1', '11', 'admin', 'admin', '0', '2024-09-25 12:55:39', NULL),
+('adm-2', '1', '1', NULL, 'admin', '0', '2024-09-16 04:25:01', NULL),
+('adm-3', '1', '9', 'admin', 'admin', '0', '2024-09-25 03:36:27', NULL),
+('adm-4', '1', '8', 'admin', 'admin', '0', '2024-09-25 02:45:27', NULL),
+('adm-5', '1', '10', 'admin', 'admin', '0', '2024-09-25 03:36:41', NULL),
+('adm-6', '1', '14', 'admin', NULL, '0', '2024-09-29 08:37:43', NULL),
+('mhs-1', '3', '13', 'admin', NULL, '0', '2024-09-25 12:58:11', NULL),
+('mhs-2', '3', '6', NULL, 'admin', '0', '2024-09-16 04:25:01', NULL),
+('mhs-3', '3', '7', NULL, 'admin', '0', '2024-09-16 04:25:01', NULL),
+('mhs-4', '3', '14', 'admin', NULL, '0', '2024-09-30 11:44:46', NULL),
+('pjg-1', '2', '12', 'admin', 'admin', '0', '2024-09-25 12:57:10', NULL),
+('pjg-2', '2', '3', NULL, 'admin', '0', '2024-09-16 04:25:01', NULL),
+('pjg-3', '2', '4', NULL, 'admin', '0', '2024-09-16 04:25:01', NULL),
+('pjg-4', '2', '5', NULL, 'admin', '0', '2024-09-16 04:25:01', NULL),
+('pjg-5', '2', '14', 'admin', NULL, '0', '2024-09-29 09:11:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -536,7 +559,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `buku`
 --
 ALTER TABLE `buku`
-  MODIFY `idbuku` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idbuku` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -554,25 +577,25 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `idkategori` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idkategori` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
-  MODIFY `idpeminjaman` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idpeminjaman` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_user` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`

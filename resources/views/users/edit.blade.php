@@ -47,6 +47,11 @@
         </div>
 
         <div class="form-group">
+            <label for="password">Password (Kosongkan jika tidak ingin mengubah)</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+
+        <div class="form-group">
             <label for="status_user">Status</label>
             <select name="status_user" class="form-control" required>
                 <option value="active" {{ $user->status_user == 'active' ? 'selected' : '' }}>Active</option>
